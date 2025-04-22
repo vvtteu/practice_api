@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class User(models.Model):
-    """Модель пользователя (вынесена из JSON)"""
+    """Модель пользователя"""
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=15)
     fam = models.CharField(max_length=100, verbose_name="Фамилия")
@@ -43,6 +43,10 @@ class PerevalAdded(models.Model):
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
     ]
+    status = models.CharField(
+        max_length=10, 
+        choices=STATUS_CHOICES, 
+        default='new')
 
     beauty_title = models.CharField(max_length=255, blank=True)
     title = models.CharField(max_length=255)
@@ -56,11 +60,18 @@ class PerevalAdded(models.Model):
         null=True, 
         blank=True
     )
-    
-    level_winter = models.CharField(max_length=10, blank=True)
-    level_summer = models.CharField(max_length=10, blank=True)
-    level_autumn = models.CharField(max_length=10, blank=True)
-    level_spring = models.CharField(max_length=10, blank=True)
+    LEVEL_CHOICES = [
+    ('1A', '1A'),
+    ('2A', '2A'),
+    ('3A', '3A'),
+    ('1Б', '1Б'),
+    ('2Б', '2Б'),
+    ('3Б', '3Б'),
+]
+    level_winter = models.CharField(max_length=10, choices=LEVEL_CHOICES, blank=True)
+    level_summer = models.CharField(max_length=10, choices=LEVEL_CHOICES, blank=True)
+    level_autumn = models.CharField(max_length=10, choices=LEVEL_CHOICES, blank=True)
+    level_spring = models.CharField(max_length=10, choices=LEVEL_CHOICES, blank=True)
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     area = models.ForeignKey(PerevalAreas, on_delete=models.SET_NULL, null=True, blank=True)
