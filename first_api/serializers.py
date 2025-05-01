@@ -22,6 +22,35 @@ class PerevalAddedSerializer(serializers.ModelSerializer):
         return pereval
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для данных пользователя.
+    
+    """
     class Meta:
         model = User
         fields = ['email', 'phone', 'fam', 'name', 'otc']
+        extra_kwargs = {
+            'email': {
+                'help_text': 'Обязательное поле. Email пользователя в формате example@domain.com',
+                'required': True,
+                'allow_blank': False,
+            },
+            'phone': {
+                'help_text': 'Телефон в формате +7XXXXXXXXXX (минимум 11 цифр)',
+                'required': True,
+                'min_length': 11,
+            },
+            'fam': {
+                'help_text': 'Фамилия пользователя (кириллица, латиница)',
+                'required': True,
+            },
+            'name': {
+                'help_text': 'Имя пользователя (кириллица, латиница)',
+                'required': True,
+            },
+            'otc': {
+                'help_text': 'Отчество пользователя (опционально)',
+                'required': False,
+                'allow_blank': True,
+            }
+        }

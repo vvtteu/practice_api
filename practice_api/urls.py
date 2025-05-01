@@ -18,16 +18,27 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from rest_framework.routers import DefaultRouter
-from first_api.views import PerevalViewSet
 from django.urls import path, include
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 
-router = DefaultRouter()
-router.register(r'submitData', PerevalViewSet, basename='pereval')
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Mountain Passes API",
+      default_version='v1',
+      description="API documentation",
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/', include('first_api.urls')),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0)),
 ]
 
 if settings.DEBUG:
