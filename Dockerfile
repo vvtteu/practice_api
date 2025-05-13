@@ -2,7 +2,8 @@ FROM python:3.12-slim
 
 # ENV PYTHONDONTWRITEBYTECODE 1
 # ENV PYTHONUNBUFFERED 1
-# Установка системных зависимостей для Pillow
+
+
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     zlib1g-dev \

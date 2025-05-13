@@ -77,7 +77,6 @@ class PerevalAdded(models.Model):
     area = models.ForeignKey(PerevalAreas, on_delete=models.SET_NULL, null=True, blank=True)
     images = models.ManyToManyField(PerevalImages)
     
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='new')
     moderator_comment = models.TextField(blank=True, null=True)
     moderation_date = models.DateTimeField(blank=True, null=True)
     date_added = models.DateTimeField(default=timezone.now)
